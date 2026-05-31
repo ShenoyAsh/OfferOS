@@ -1,0 +1,12 @@
+node_modules
+.next
+.git
+.gitignore
+.env*.local
+*.mp4
+*.webp
+browser_recordings
+out
+build
+README.md
+offeros_submission_kit.md

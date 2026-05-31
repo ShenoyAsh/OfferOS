@@ -1,26 +1,570 @@
 @import "tailwindcss";
 
+/* ============================================================
+   OFFEROS DESIGN SYSTEM — CSS VARIABLES
+   Theme: Cyberpunk Academic
+   ============================================================ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Core Background */
+  --bg-void: #020208;
+  --bg-base: #0a0a0f;
+  --bg-surface: #0f0f1a;
+  --bg-elevated: #141422;
+  --bg-overlay: #1a1a2e;
+
+  /* Neon Accents */
+  --neon-cyan: #00f0ff;
+  --neon-cyan-dim: #00b8c4;
+  --neon-purple: #bd00ff;
+  --neon-purple-dim: #8a00bb;
+  --neon-green: #00ff88;
+  --neon-orange: #ff6b00;
+  --neon-pink: #ff00a8;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-bright: rgba(0, 240, 255, 0.2);
+
+  /* Text */
+  --text-primary: rgba(255, 255, 255, 0.95);
+  --text-secondary: rgba(255, 255, 255, 0.6);
+  --text-muted: rgba(255, 255, 255, 0.35);
+  --text-neon: var(--neon-cyan);
+
+  /* Gradients */
+  --grad-aurora: linear-gradient(
+    135deg,
+    #020208 0%,
+    #0a0520 25%,
+    #050a1a 50%,
+    #0a0520 75%,
+    #020208 100%
+  );
+  --grad-cyan-purple: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+  --grad-surface: linear-gradient(135deg, rgba(0,240,255,0.05), rgba(189,0,255,0.05));
+
+  /* Shadows */
+  --shadow-neon-cyan: 0 0 20px rgba(0, 240, 255, 0.3), 0 0 60px rgba(0, 240, 255, 0.1);
+  --shadow-neon-purple: 0 0 20px rgba(189, 0, 255, 0.3), 0 0 60px rgba(189, 0, 255, 0.1);
+  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+  --shadow-window: 0 24px 64px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(0, 240, 255, 0.1);
+
+  /* Spacing */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-window: 14px;
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Taskbar */
+  --taskbar-height: 52px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ============================================================
+   LIGHT MODE CUSTOM OVERRIDES
+   ============================================================ */
+html[data-theme="light"] {
+  /* Core Background */
+  --bg-void: #f4f4f9;
+  --bg-base: #ececef;
+  --bg-surface: #ffffff;
+  --bg-elevated: #f8f9fa;
+  --bg-overlay: #e5e5ea;
+
+  /* Neon Accents */
+  --neon-cyan: #008fa0;
+  --neon-cyan-dim: #006b78;
+  --neon-purple: #9d00d3;
+  --neon-purple-dim: #6d0093;
+  --neon-green: #00a85a;
+  --neon-orange: #d95a00;
+  --neon-pink: #d00084;
+
+  /* Glass */
+  --glass-bg: rgba(0, 0, 0, 0.03);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-border-bright: rgba(0, 143, 160, 0.25);
+
+  /* Text */
+  --text-primary: #0f0f15;
+  --text-secondary: #3a3a4a;
+  --text-muted: #6b6b7a;
+  --text-neon: var(--neon-cyan);
+
+  /* Gradients */
+  --grad-aurora: linear-gradient(
+    135deg,
+    #f4f4f9 0%,
+    #e9e9f3 25%,
+    #e1f2f9 50%,
+    #e9e9f3 75%,
+    #f4f4f9 100%
+  );
+  --grad-surface: linear-gradient(135deg, rgba(0,143,160,0.04), rgba(157,0,211,0.04));
+
+  /* Shadows */
+  --shadow-neon-cyan: 0 0 15px rgba(0, 143, 160, 0.15);
+  --shadow-neon-purple: 0 0 15px rgba(157, 0, 211, 0.15);
+  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255,255,255,0.9);
+  --shadow-window: 0 24px 64px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 143, 160, 0.08);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+
+/* ============================================================
+   GLOBAL RESETS
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+  overflow: hidden;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
+  background: var(--bg-void);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow: hidden;
+}
+
+#__next, main {
+  height: 100%;
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+
+.font-mono {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+.text-gradient {
+  background: var(--grad-cyan-purple);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-glow-cyan {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+}
+
+/* ============================================================
+   GLASS MORPHISM PRIMITIVES
+   ============================================================ */
+
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.glass-bright {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--glass-border-bright);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+}
+
+/* ============================================================
+   NEON BORDERS & EFFECTS
+   ============================================================ */
+
+.neon-border-cyan {
+  border: 1px solid rgba(0, 240, 255, 0.4);
+  box-shadow: 0 0 0 1px rgba(0, 240, 255, 0.1), inset 0 0 20px rgba(0, 240, 255, 0.05);
+}
+
+.neon-border-purple {
+  border: 1px solid rgba(189, 0, 255, 0.4);
+  box-shadow: 0 0 0 1px rgba(189, 0, 255, 0.1), inset 0 0 20px rgba(189, 0, 255, 0.05);
+}
+
+/* ============================================================
+   SCROLLBARS — Custom thin neon scrollbars
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.3);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 240, 255, 0.6);
+}
+
+/* ============================================================
+   AURORA WALLPAPER ANIMATION
+   ============================================================ */
+
+@keyframes aurora-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes aurora-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50%       { opacity: 0.7; transform: scale(1.05); }
+}
+
+@keyframes float-particle {
+  0%   { transform: translateY(0px) translateX(0px); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(-100vh) translateX(30px); opacity: 0; }
+}
+
+@keyframes neon-pulse {
+  0%, 100% { box-shadow: 0 0 5px currentColor, 0 0 10px currentColor; }
+  50%       { box-shadow: 0 0 15px currentColor, 0 0 30px currentColor, 0 0 60px currentColor; }
+}
+
+@keyframes scanline {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes glow-breathe {
+  0%, 100% { filter: brightness(1); }
+  50%       { filter: brightness(1.3); }
+}
+
+@keyframes slide-up {
+  from { transform: translateY(12px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slide-down {
+  from { transform: translateY(-12px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scale-in {
+  from { transform: scale(0.95); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+@keyframes window-open {
+  from { transform: scale(0.92) translateY(8px); opacity: 0; }
+  to   { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes progress-fill {
+  from { width: 0%; }
+}
+
+/* ============================================================
+   UTILITY ANIMATIONS
+   ============================================================ */
+
+.animate-slide-up    { animation: slide-up 0.3s ease forwards; }
+.animate-slide-down  { animation: slide-down 0.3s ease forwards; }
+.animate-fade-in     { animation: fade-in 0.4s ease forwards; }
+.animate-scale-in    { animation: scale-in 0.3s ease forwards; }
+.animate-window-open { animation: window-open 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+.animate-spin        { animation: spin 1s linear infinite; }
+.animate-neon-pulse  { animation: neon-pulse 2s ease infinite; }
+.animate-glow        { animation: glow-breathe 3s ease infinite; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================
+   OS WINDOW STYLES
+   ============================================================ */
+
+.os-window {
+  position: absolute;
+  background: var(--bg-surface);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-window);
+  box-shadow: var(--shadow-window);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  will-change: transform;
+  animation: window-open 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.os-window.focused {
+  border-color: rgba(0, 240, 255, 0.25);
+  box-shadow: var(--shadow-window), 0 0 0 1px rgba(0, 240, 255, 0.1);
+}
+
+.os-window-titlebar {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid var(--glass-border);
+  cursor: grab;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.os-window-titlebar:active { cursor: grabbing; }
+
+.os-window-controls {
+  display: flex;
+  gap: 7px;
+  margin-right: 10px;
+}
+
+.os-window-btn {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: filter var(--transition-fast);
+}
+
+.os-window-btn:hover { filter: brightness(1.4); }
+.os-window-btn.close   { background: #ff5f57; }
+.os-window-btn.min     { background: #febc2e; }
+.os-window-btn.max     { background: #28c840; }
+
+.os-window-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+  flex: 1;
+  text-align: center;
+  pointer-events: none;
+}
+
+.os-window-content {
+  flex: 1;
+  overflow: auto;
+  position: relative;
+}
+
+/* ============================================================
+   BUTTON STYLES
+   ============================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+  color: #000;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(0, 240, 255, 0.3);
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+}
+
+.btn-ghost:hover {
+  background: var(--glass-bg);
+  border-color: rgba(0, 240, 255, 0.3);
+  color: var(--neon-cyan);
+}
+
+.btn-danger {
+  background: rgba(255, 59, 48, 0.15);
+  border: 1px solid rgba(255, 59, 48, 0.3);
+  color: #ff3b30;
+}
+
+.btn-danger:hover {
+  background: rgba(255, 59, 48, 0.25);
+}
+
+/* ============================================================
+   INPUT STYLES
+   ============================================================ */
+
+.input {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 14px;
+  color: var(--text-primary);
+  width: 100%;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  outline: none;
+  font-family: inherit;
+}
+
+.input:focus {
+  border-color: rgba(0, 240, 255, 0.4);
+  box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.1);
+}
+
+.input::placeholder { color: var(--text-muted); }
+
+/* ============================================================
+   BADGE STYLES
+   ============================================================ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.badge-easy   { background: rgba(0, 255, 136, 0.15); color: #00ff88; border: 1px solid rgba(0,255,136,0.3); }
+.badge-medium { background: rgba(255, 165, 0, 0.15); color: #ffa500; border: 1px solid rgba(255,165,0,0.3); }
+.badge-hard   { background: rgba(255, 59, 48, 0.15); color: #ff3b30; border: 1px solid rgba(255,59,48,0.3); }
+.badge-pro    { background: linear-gradient(135deg, rgba(0,240,255,0.15), rgba(189,0,255,0.15)); color: var(--neon-cyan); border: 1px solid rgba(0,240,255,0.3); }
+
+/* ============================================================
+   SKELETON LOADER
+   ============================================================ */
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0.03) 25%,
+    rgba(255,255,255,0.07) 50%,
+    rgba(255,255,255,0.03) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-md);
+}
+
+/* ============================================================
+   REACT RESIZABLE OVERRIDES
+   ============================================================ */
+
+.react-resizable-handle {
+  position: absolute;
+  background: transparent;
+}
+
+.react-resizable-handle-se {
+  bottom: 0;
+  right: 0;
+  width: 16px;
+  height: 16px;
+  cursor: se-resize;
+}
+
+.react-resizable-handle-e {
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 60%;
+  cursor: e-resize;
+}
+
+.react-resizable-handle-s {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 6px;
+  cursor: s-resize;
+}
+
+/* ============================================================
+   MONACO EDITOR OVERRIDES
+   ============================================================ */
+
+.monaco-editor .margin,
+.monaco-editor-background,
+.monaco-editor .inputarea.ime-input {
+  background: transparent !important;
+}
+
+/* ============================================================
+   COMMAND PALETTE
+   ============================================================ */
+
+[cmdk-overlay] {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  animation: fade-in 0.15s ease;
+}
+
+[cmdk-dialog] {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(640px, 90vw);
+  z-index: 1001;
+  animation: scale-in 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
