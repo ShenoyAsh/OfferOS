@@ -1,4 +1,4 @@
-# 🏆 OfferOS 
+# OfferOS 
 **AI-Personalized Desktop OS for Placement Prep**
 
 *Built for the **Outskill X OpenAI Hackathon** (Build, Ship, Launch)*
@@ -93,4 +93,4 @@ docker run -p 3000:3000 offeros
 ---
 
 ## 🏆 Hackathon Context & Submission
-OfferOS is conceptualized, engineered, and shipped within 7 days for the **Outskill X OpenAI Hackathon**. For a full walkthrough of the judging script, high-fidelity screenshots, and deployment specifications, please check the local [offeros_submission_kit.md](offeros_submission_kit.md)!
+OfferOS is conceptualized, engineered, and shipped within 7 days for the **Outskill X OpenAI Hackathon**.
