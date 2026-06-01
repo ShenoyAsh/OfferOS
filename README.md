@@ -14,7 +14,7 @@ OfferOS is fully deployed and serving live production traffic on Google Cloud Ru
 
 ---
 
-## 📖 About OfferOS
+##  About OfferOS
 OfferOS reimagines traditional placement preparation by turning a boring dashboard into a high-fidelity, multi-window **desktop operating system environment** inside your browser. Candidates no longer have to jump between disconnected apps or browser tabs. They can organize their prep workspace dynamically—running code editors, resume scanners, mock interview assistants, and scheduler roadmaps concurrently.
 
 ---
